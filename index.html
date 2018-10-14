@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./index.scss"></link>
+    <title>Soccer App</title>
+  </head>
+  <body>
+    <br>
+    <h2>Soccer Substitutions</h2>
+    <br>
+    <br>
+    <div class="inputs">
+      <input type="text" id="player_amount" class="input">
+      <label for="">Enter your number of players</label>
+      <br>
+      <br>
+      <input type="text" id="total_time" class="input">
+      <label for="">Enter total time of game</label>
+      <br>
+      <br>
+      <input type="text" id="time_per_rotation" class="input">
+      <label for="">Enter how often you want to substitute your players</label>
+      <br>
+      <br>
+      <br>
+      <button id="continued">Continue</button>
+      <br>
+      <br>
+      <button id="nameSort" style="display: none;">Submit Names</button>
+      <br>
+    </div>
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
+  </body>
+</html>
