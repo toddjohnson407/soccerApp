@@ -3,33 +3,43 @@
 // All of the Node.js APIs are available in this process.
 
 
-var nameManipulate = function(playerAmount, rotationPeriod, totalTime) {
+var nameManipulate = function(playerAmount, rotationPeriod, totalTime, playersIn) {
   var number_of_rotations = totalTime / rotationPeriod;
   var names = document.querySelectorAll('input.name');
   var name_index = 0;
   for (var i = 0; i < number_of_rotations; i++) {
+    var players_in_array = [];
 
     if (name_index == playerAmount - 1) {
       name_index = 0;
       console.log(`${names[playerAmount - 1].value}${names[name_index].value}`);
+      for (var q = 0; q < playersIn - 1; q++) {
+        players_in_array.push(names[name_index + q].value);
+      }
+      players_in_array.push(names[0]);
     }
     else if (name_index > playerAmount - 1) {
       name_index = 0;
       console.log("oh");
     }
     else {
-      console.log(`${names[name_index].value}${names[name_index+1].value}`);
+      for (var q = 0; q < playersIn; q++) {
+        players_in_array.push(names[name_index + q].value);
+      }
+      console.log(players_in_array);
+      // console.log(`${names[name_index].value}${names[name_index+1].value}`);
       name_index += 1;
     }
   }
 }
 
-var calculate = function(player_amount, time_of_rotation, total_time) {
+var calculate = function(player_amount, time_of_rotation, total_time, players_in) {
   var playerArray = [];
   var playerInt = parseInt(player_amount, 10);
   var rotationInt = parseInt(time_of_rotation, 10);
   var totalInt = parseInt(total_time, 10);
-  console.log(playerInt);
+  var playersInInt = parseInt(players_in, 10);
+  // console.log(playerInt);
   for (var i = 0; i < playerInt; i++) {
     console.log(i);
 
@@ -49,14 +59,15 @@ var calculate = function(player_amount, time_of_rotation, total_time) {
   console.log(playerArray.length);
   var nameSort = document.getElementById("nameSort");
   nameSort.style.display = "block";
-  nameSort.onclick = function() {nameManipulate(playerArray.length, rotationInt, totalInt)};
+  nameSort.onclick = function() {nameManipulate(playerArray.length, rotationInt, totalInt, playersInInt)};
 }
 
 var continuation = function() {
   var total_time = document.getElementById("total_time").value;
   var player_amount = document.getElementById("player_amount").value;
   var time_of_rotation = document.getElementById("time_per_rotation").value;
-  calculate(player_amount, time_of_rotation, total_time);
+  var players_in = document.getElementById("players_in").value;
+  calculate(player_amount, time_of_rotation, total_time, players_in);
 };
 
 continued.onclick = function() {continuation()};
