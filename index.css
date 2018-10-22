@@ -1,17 +1,34 @@
 body {
   background-color: green;
-  margin-left: 50px;
+  margin-left: 50px !important;
   // text-align: center;
 }
 
-.input {
-
-}
-
 input {
+  color: black !important;
   border-radius: 15px;
 }
 
 button {
   border-radius: 15px;
+}
+
+.tables {
+  background-color: green !important;
+  border-radius: 15px;
+  text-align: center;
+  padding: 8px;
+  margin: 10px;
+}
+
+#clock {
+  position: absolute;
+  right: 20vh;
+  top: 20vh;
+}
+
+#notify {
+  position: absolute;
+  right: 20vh;
+  top: 40vh;
 }
