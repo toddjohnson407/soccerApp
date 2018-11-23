@@ -5,6 +5,7 @@
 const Clock = require('./src/clock.js');
 var notifications = [];
 
+
 var notifySubstitution = function(clock, notifications) {
   var nofifyText = document.getElementById("notifyText");
   console.log(notifications[clock.substitutes + 1]);
@@ -12,6 +13,7 @@ var notifySubstitution = function(clock, notifications) {
   notifyText.innerText = `${notifications[clock.substitutes + 1]}`;
   clock.substitutionTracker();
 }
+
 
 var pauseClock = function(clock) {
   clock.toggleTime();
@@ -62,13 +64,23 @@ var gameClock = function(clock, notifications) {
   }
 };
 
-
+/**
+ *  what does the function do (not exactly how, but what)
+ *
+ *  players_in_array
+ */
 var timeTableCreate = function(players_in_array, playersIn, current_time, names, playerOut, notifications) {
-  var row = document.getElementById("rows");
-  var tableWrap = document.createElement("DIV");
-  tableWrap.setAttribute("class", "col-xs-4 tables");
-  row.appendChild(tableWrap);
-  var timeDisplay = document.createElement("DIV");
+    //explain what these are
+    var row = document.getElementById("rows");
+    var tableWrap = document.createElement("DIV");
+
+    //explain what this is doing
+    tableWrap.setAttribute("class", "col-xs-4 tables");
+    row.appendChild(tableWrap);
+
+    //wtf is this (how are you going to use it in the future)
+    var timeDisplay = document.createElement("DIV");
+
   if (current_time > 0) {
     var notification = timeDisplay.innerText = `${current_time}:00 - ${players_in_array[playersIn - 1]} goes in for ${playerOut}`;
     notifications.push(notification);
@@ -86,7 +98,9 @@ var timeTableCreate = function(players_in_array, playersIn, current_time, names,
   }
 }
 
-var nameManipulate = function(playerAmount, rotationPeriod, totalTime, playersIn) {
+var nameManipulate = function(playerAmount, rotationPeriod, totalTime, playersIn, playersPerRotInt) {
+  console.log("playersperrot");
+  console.log(playersPerRotInt);
   var stopWatch = document.getElementById("stopwatch");
   stopWatch.setAttribute("style", "display: block");
   var number_of_rotations = totalTime / rotationPeriod;
@@ -94,46 +108,68 @@ var nameManipulate = function(playerAmount, rotationPeriod, totalTime, playersIn
   var name_index = 0;
   var current_time = 0;
   clock.rotationCount = rotationPeriod;
+
   for (var i = 0; i < number_of_rotations; i++) {
     var players_in_array = [];
+
     if (name_index >= playerAmount - playersIn + 1) {
       var frontPlayers = playerAmount - name_index;
+
       for (var q = 0; q < frontPlayers; q++) {
         if (q == 0) {
-          var playerOut = names[playerAmount - frontPlayers - 1].value;
+          var players_out = [];
+          for (var out = 0; out < playersPerRotInt; out++) {
+            var playerOut = names[playerAmount - frontPlayers + out].value;
+            players_out.push(playerOut);
+          }
+          console.log("players out");
+          console.log(players_out);
         }
         players_in_array.push(names[playerAmount - frontPlayers + q].value);
       }
+
       for (var q = 0; q < playersIn - frontPlayers; q++) {
         players_in_array.push(names[q].value);
       }
+
       console.log(players_in_array);
-
       timeTableCreate(players_in_array, playersIn, current_time, names, playerOut, notifications);
-
       current_time += rotationPeriod;
       name_index += 1;
       if (name_index == playerAmount) {
         name_index = 0;
       }
     }
+
     else {
       if (name_index == playerAmount - 1) {
         name_index = 0;
       }
+
       for (var q = 0; q < playersIn; q++) {
         if (q == 0) {
-          if (name_index > 0){
-            var playerOut = names[name_index - 1].value;
+          var players_out = [];
+          if (name_index > 1){
+            for (var out = 0; out < playersPerRotInt; out++) {
+              var playerOut = names[name_index + out].value;
+              players_out.push(playerOut);
+            }
+            console.log("players out");
+            console.log(players_out);
           }
           else {
-            var playerOut = names[0].value
+            for (var out = 0; out < playersPerRotInt; out++) {
+              var playerOut = names[out].value
+              players_out.push(playerOut);
+            }
+            console.log("players_out");
+            console.log(players_out);
           }
         }
         players_in_array.push(names[name_index + q].value);
       }
-      console.log(players_in_array);
 
+      console.log(players_in_array);
       timeTableCreate(players_in_array, playersIn, current_time, names, playerOut, notifications);
 
       current_time += rotationPeriod;
@@ -148,6 +184,7 @@ var calculate = function(player_amount, time_of_rotation, total_time, players_in
   var rotationInt = parseInt(time_of_rotation, 10);
   var totalInt = parseInt(total_time, 10);
   var playersInInt = parseInt(players_in, 10);
+  var playersPerRotInt = playerInt - playersInInt;
   var inputs = document.getElementById("inputs");
   for (var i = 0; i < playerInt; i++) {
     console.log(i);
@@ -167,7 +204,7 @@ var calculate = function(player_amount, time_of_rotation, total_time, players_in
   }
   var nameSort = document.getElementById("nameSort");
   nameSort.style.display = "block";
-  nameSort.onclick = function() {nameManipulate(playerArray.length, rotationInt, totalInt, playersInInt)};
+  nameSort.onclick = function() {nameManipulate(playerArray.length, rotationInt, totalInt, playersInInt, playersPerRotInt)};
 }
 
 var continuation = function() {
