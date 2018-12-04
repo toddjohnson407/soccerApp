@@ -99,8 +99,8 @@ var timeTableCreate = function(players_in_array, playersIn, current_time, names,
 }
 
 var nameManipulate = function(playerAmount, rotationPeriod, totalTime, playersIn, playersPerRotInt) {
-  console.log("playersperrot");
-  console.log(playersPerRotInt);
+  // console.log("playersperrot");
+  // console.log(playersPerRotInt);
   var stopWatch = document.getElementById("stopwatch");
   stopWatch.setAttribute("style", "display: block");
   var number_of_rotations = totalTime / rotationPeriod;
